@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vazifalar Ro'yxati</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Vazifalar Ro'yxati</h1>
+<input type="text" id="vazifaInput" placeholder="Vazifani kiriting...">
+<button onclick="vazifa_qoshish()">Qo'shish</button>
+
+<h2>Vazifalar:</h2>
+<ul id="vazifalarList"></ul>
+
+<script>
+    let vazifalar = [];
+
+    function vazifa_qoshish() {
+        const vazifaInput = document.getElementById('vazifaInput');
+        const vazifa = vazifaInput.value.trim();// Kirilgan vazifani olish va bo'sh joylarni olib tashlash.
+        if (vazifa) {
+            vazifalar.push({ vazifa: vazifa, bajarildi: false });
+            vazifaInput.value = ''; //Kirish maydonini tozalaydi.
+            korsatish();
+        } else {
+            alert("VAZIFANI KIRIT");
+        }
+    }
+
+    function bajarildi(indeks) {
+        vazifalar[indeks].bajarildi = !vazifalar[indeks].bajarildi;
+        korsatish();
+    }
+
+    function ochirish(indeks) {
+        vazifalar.splice(indeks, 1);
+        korsatish();
+    }
+
+    function korsatish() {
+        const vazifalarList = document.getElementById('vazifalarList');
+        vazifalarList.innerHTML = '';
+
+        vazifalar.forEach((vazifa, indeks) => {
+            const li = document.createElement('li');
+            li.className = vazifa.bajarildi ? 'completed' : '';
+            li.textContent = vazifa.vazifa;
+
+            const bajarildiButton = document.createElement('button');
+            bajarildiButton.textContent = vazifa.bajarildi ? 'Qaytarish' : 'Bajarilgan';
+            bajarildiButton.onclick = () => bajarildi(indeks);
+
+            const ochirishButton = document.createElement('button');
+            ochirishButton.textContent = 'O\'chirish';
+            ochirishButton.onclick = () => o (indeks);
+
+            li.appendChild(bajarildiButton);
+            li.appendChild(ochirishButton);
+            vazifalarList.appendChild(li);
+        });
+    }
+</script>
+
+</body>
+</html>
+<!-- js -->
+<!-- function addTask(): Bu funksiya yangi vazifani qo'shadi.
+const input = document.getElementById('todo-input');: Kirish maydonini olish.
+const newTask = input.value.trim();: Kirilgan vazifani olish va bo'sh joylarni olib tashlash.
+if (newTask === '') return;: Agar vazifa bo'sh bo'lsa, hech narsa qilmaydi.
+const li = document.createElement('li');: Yangi ro'yxat elementi (vazifa) yaratadi.
+li.textContent = newTask;: Yangi vazifani ro'yxat elementiga qo'shadi.
+li.onclick = function() { this.remove(); };: Vazifani bosish bilan o'chirish imkoniyatini beradi.
+document.getElementById('todo-list').appendChild(li);: Yangi vazifani ro'yxatga qo'shadi.
+input.value = '';: Kirish maydonini tozalaydi. -->
+
+
+<!-- css -->
+<!-- body: Sahifaning umumiy ko'rinishi va fon rangini belgilaydi.
+#todo-list: Ro'yxatning ko'rinishini boshqaradi (tugmalar va chegaralar).
+li: Har bir vazifaning ko'rinishi (to'siq va yumshoq burchaklar).
+input va button: Ularning ko'rinishi va hover holati (bosilganda rang o'zgarishi). -->
+
+<!-- html -->
+<!-- <h1>: Sahifaning sarlavhasi.
+<input>: Foydalanuvchi yangi vazifani kiritishi uchun maydon. id="todo-input" orqali JavaScript yordamida unga murojaat qilish mumkin.
+<button>: "Qo'shish" tugmasi, bosilganda addTask() funksiyasini chaqiradi.
+<ul>: Vazifalarni ro'yxatda ko'rsatish uchun ishlatiladi. -->
+
+
+
+
+
+
+
+
+
